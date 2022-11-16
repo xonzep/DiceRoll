@@ -13,7 +13,7 @@ static void DiceRoll(int dCount, int dFaces)
 {
     List<int> diceResults = new();
 
-    for (int i = 1; i < dCount; i++)
+    for (int i = 0; i < dCount; i++)
     {
         int randomNumber = new Random().Next(1, dFaces);
         diceResults.Add(randomNumber);
@@ -28,5 +28,6 @@ Console.WriteLine("How many dice do you need?");
 int userDiceNum = Convert.ToInt32(Console.ReadLine());
 Console.WriteLine("How many faces are on these dice?");
 int userDiceFace = Convert.ToInt32(Console.ReadLine());
+Console.WriteLine(" ");
 
 DiceRoll(userDiceNum, userDiceFace);
