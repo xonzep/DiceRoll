@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
+﻿
 /*
  * Breakdown of issue before writing code.
  * Create a function that takes in the number of dice we're rolling and how many faces they have. 
@@ -9,25 +7,56 @@ using System.Collections.Generic;
  * We can then call that for each dice and store that in our list.
  * We can then sum those numbers.
 */
-static void DiceRoll(int dCount, int dFaces)
+
+
+static List<int> DiceRoll(int dCount, int dFaces)
 {
     List<int> diceResults = new();
-
+    Random random = new Random();
+    
+    //For loop to get our numbers.
     for (int i = 0; i < dCount; i++)
     {
-        int randomNumber = new Random().Next(1, dFaces);
+        int randomNumber = random.Next(1, dFaces);
         diceResults.Add(randomNumber);
     }
 
-    diceResults.ForEach(Console.WriteLine);
-    var total = diceResults.Sum();
-    Console.WriteLine("The total amount is: " + total);
+    return diceResults;
+
 }
 
-Console.WriteLine("How many dice do you need?");
-int userDiceNum = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine("How many faces are on these dice?");
-int userDiceFace = Convert.ToInt32(Console.ReadLine());
-Console.WriteLine(" ");
+static void DisplayResult(List<int> diceResults)
+{
+    diceResults.ForEach(Console.WriteLine);
+    int total = diceResults.Sum();
+    Console.WriteLine("The total amount is: " + total);    
+}
 
-DiceRoll(userDiceNum, userDiceFace);
+
+static int ParseIntInput(string prompt)
+{
+    Console.WriteLine(prompt);
+    int userInput;
+    while (!int.TryParse(Console.ReadLine(), out userInput))
+    {
+        Console.WriteLine("Invalid input. Please input a valid integer value.");
+    }
+
+    return userInput;
+}
+
+bool continueRolling = true;
+while (continueRolling)
+{
+    int userDiceNum = ParseIntInput("How many dice do you need?");
+    int userDiceFace = ParseIntInput("How many faces are on these dice?");
+
+    Console.WriteLine(" ");
+
+    var results = DiceRoll(userDiceNum, userDiceFace);
+    DisplayResult(results);
+    
+    Console.WriteLine("Do you wish to roll again? (Y/N)");
+    string? userAnswer = Console.ReadLine();
+    continueRolling = (userAnswer?? "Y").ToUpper() == "Y";
+}
