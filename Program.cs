@@ -9,6 +9,24 @@
 */
 
 
+bool continueRolling = true;
+while (continueRolling)
+{
+    int userDiceNum = ParseIntInput("How many dice do you need?");
+    int userDiceFace = ParseIntInput("How many faces are on these dice?");
+
+    Console.WriteLine(" ");
+
+    List<int> results = DiceRoll(userDiceNum, userDiceFace);
+    DisplayResult(results);
+    
+    Console.WriteLine("Do you wish to roll again? (Y/N)");
+    string? userAnswer = Console.ReadLine();
+    continueRolling = (userAnswer?? "Y").ToUpper() == "Y";
+}
+
+return;
+
 static List<int> DiceRoll(int dCount, int dFaces)
 {
     List<int> diceResults = new();
@@ -17,7 +35,7 @@ static List<int> DiceRoll(int dCount, int dFaces)
     //For loop to get our numbers.
     for (int i = 0; i < dCount; i++)
     {
-        int randomNumber = random.Next(1, dFaces);
+        int randomNumber = random.Next(1, dFaces + 1);
         diceResults.Add(randomNumber);
     }
 
@@ -32,7 +50,6 @@ static void DisplayResult(List<int> diceResults)
     Console.WriteLine("The total amount is: " + total);    
 }
 
-
 static int ParseIntInput(string prompt)
 {
     Console.WriteLine(prompt);
@@ -43,20 +60,4 @@ static int ParseIntInput(string prompt)
     }
 
     return userInput;
-}
-
-bool continueRolling = true;
-while (continueRolling)
-{
-    int userDiceNum = ParseIntInput("How many dice do you need?");
-    int userDiceFace = ParseIntInput("How many faces are on these dice?");
-
-    Console.WriteLine(" ");
-
-    var results = DiceRoll(userDiceNum, userDiceFace);
-    DisplayResult(results);
-    
-    Console.WriteLine("Do you wish to roll again? (Y/N)");
-    string? userAnswer = Console.ReadLine();
-    continueRolling = (userAnswer?? "Y").ToUpper() == "Y";
 }
